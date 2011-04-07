@@ -1,6 +1,6 @@
 "===============================================================================
 "==========  CUSTOMIZATION (vimrc)  ============================================
-" Last Modified: April 06, 2011
+" Last Modified: April 07, 2011
 "===============================================================================
 filetype off
 call pathogen#runtime_append_all_bundles() 
@@ -225,6 +225,11 @@ let g:xptemplate_bundle = 'javascript_jquery'
 " Bring up the Command-T window
 nmap <silent> ,t :CommandT<CR>
 nmap <silent> ,b :CommandTBuffer<CR>
+
+" Settings for vim-indent-guides plugin
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_guide_size = 1
+let g:indent_guides_start_level = 2
 
 "===============================================================================
 " Custom Functions Start Here"{{{
