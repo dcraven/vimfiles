@@ -1,6 +1,6 @@
 "===============================================================================
 "==========  CUSTOMIZATION (vimrc)  ============================================
-" Last Modified: April 07, 2011
+" Last Modified: May 16, 2011
 "===============================================================================
 filetype off
 call pathogen#runtime_append_all_bundles() 
@@ -19,6 +19,21 @@ if version >= 700
     au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
 endif
 " }}}
+
+" Version 7.3 features
+if version >= 703
+    set undofile
+    let undos = '/home/dcraven/.local/share/vim/undo'
+    if isdirectory(undos)
+        let &undodir=undos
+    endif
+endif
+
+set backup
+let backups = '/home/dcraven/.local/share/vim/backup'
+if isdirectory(backups)
+    let &backupdir=backups
+endif
 
 " VCSCommand Stuff
 let g:VCSCommandDeleteOnHide = 1
@@ -54,11 +69,6 @@ endif
 set cscopequickfix=s-,c-,d-,i-,t-,e-
 set cscopetag
 
-set backup
-set backupdir=~/.local/share/vim/backup
-
-set undofile
-set undodir=~/.local/share/vim/undo
 
 "CScope Stuff
 if has("cscope")
@@ -98,6 +108,7 @@ set statusline+=%=                           " right align
 set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
 set statusline+=%b,0x%-8B\                   " current char
 set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
+
 
 set notitle
 set noautochdir
@@ -146,9 +157,10 @@ set foldmethod=syntax
 set foldnestmax=1
 set cmdheight=2
 set wildmenu
-set wildignore=*.bak,*.pyc,*.pyo,*.o,*.e,*~
+set wildignore=*.bak,*.pyc,*.pyo,*.o,*.e,*~,*.png,*.jpg
 set printoptions=left:8pc,right:3pc
 
+let javaScript_fold=1
 "===============================================================================
 " Custom Abbreviations Start Here"{{{
 "===============================================================================
@@ -221,13 +233,15 @@ map <silent> <f5> :call Speller()<cr>
 
 " XPSnippets options
 let g:xptemplate_bundle = 'javascript_jquery'
+let g:xptemplate_brace_complete = '([{'
+let g:xptemplate_vars = "SParg="
 
 " Bring up the Command-T window
 nmap <silent> ,t :CommandT<CR>
 nmap <silent> ,b :CommandTBuffer<CR>
 
 " Settings for vim-indent-guides plugin
-let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_enable_on_vim_startup = 0
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 2
 
@@ -459,5 +473,7 @@ fun! LastMod()
   endif
   exe "1," . l . "g/Last Modified: /s/Last Modified: .*/Last Modified: " . strftime("%B %d, %Y")
 endfun
+
+map , <Leader>
 
 " vim: set fdm=marker:
