@@ -1,6 +1,6 @@
 "===============================================================================
 "==========  CUSTOMIZATION (vimrc)  ============================================
-" Last Modified: May 16, 2011
+" Last Modified: June 17, 2011
 "===============================================================================
 filetype off
 call pathogen#runtime_append_all_bundles() 
@@ -40,6 +40,10 @@ let g:VCSCommandDeleteOnHide = 1
 
 " NERD Commenter Stuff
 let g:NERDShutUp = 1
+" Insert comment inline
+imap <C-C> <plug>NERDCommenterInInsert
+
+
 
 " FSwitch settings
 com! A       :call FSwitch('%', '')
