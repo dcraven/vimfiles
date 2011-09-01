@@ -19,3 +19,9 @@
 [submodule "bundle/git-vim"]
 	path = bundle/git-vim
 	url = git://github.com/motemen/git-vim.git
+[submodule "bundle/gitv"]
+	path = bundle/gitv
+	url = git://github.com/gregsexton/gitv.git
+[submodule "bundle/vim-taglist-plus"]
+	path = bundle/vim-taglist-plus
+	url = git://github.com/int3/vim-taglist-plus.git
