@@ -1,7 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/home/dcraven/.vim/bundle/taglist-plus'
-let g:netrw_dirhist_2='/home/dcraven/Src/BZR/NDS/trioweb/JSCommon'
-let g:netrw_dirhist_3='/home/dcraven/foo'
-let g:netrw_dirhist_4='/home/dcraven/.vim/bundle/xptemplate/personal/ftplugin/c'
-let g:netrw_dirhist_5='/home/dcraven/.vim/bundle/nerdcommenter/plugin'
