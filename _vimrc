@@ -1,6 +1,6 @@
 "===============================================================================
 "==========  CUSTOMIZATION (vimrc)  ============================================
-" Last Modified: June 17, 2011
+" Last Modified: August 24, 2011
 "===============================================================================
 filetype off
 call pathogen#runtime_append_all_bundles() 
@@ -23,14 +23,14 @@ endif
 " Version 7.3 features
 if version >= 703
     set undofile
-    let undos = '/home/dcraven/.local/share/vim/undo'
+    let undos = expand('~/.local/share/vim/undo')
     if isdirectory(undos)
         let &undodir=undos
     endif
 endif
 
 set backup
-let backups = '/home/dcraven/.local/share/vim/backup'
+let backups = expand('~/.local/share/vim/backup')
 if isdirectory(backups)
     let &backupdir=backups
 endif
@@ -43,7 +43,19 @@ let g:NERDShutUp = 1
 " Insert comment inline
 imap <C-C> <plug>NERDCommenterInInsert
 
+" Auto-clean fugitive buffers ffs
+autocmd BufReadPost fugitive://* set bufhidden=delete
+" Quick Ggrep word under cursor
+nmap <Leader>gg :Git <C-R><C-W><CR>
+vmap <Leader>vg ""y:Ggrep '<C-R>"'<CR>
 
+" Open QuickFix window when using grep
+autocmd QuickFixCmdPost *grep* cwindow
+
+" Gitv mappings
+nmap <leader>gv :Gitv --all<cr>
+nmap <leader>gV :Gitv! --all<cr>
+vmap <leader>gV :Gitv! --all<cr>
 
 " FSwitch settings
 com! A       :call FSwitch('%', '')
@@ -90,13 +102,15 @@ if has("cscope")
 endif
 
 "Taglist Stuff
-let Tlist_Ctags_Cmd = '/usr/bin/ctags'
-let Tlist_Process_File_Always = 1
-let Tlist_File_Fold_Auto_Close = 1
-let Tlist_Auto_Update = 1
-set title titlestring=%<%f\ \ \ \ \ \ \ \ \ %([\ %{Tlist_Get_Tag_Prototype_By_Line()}\ ]%)
-nmap <F11> :TlistToggle<CR>
-nmap <F10> :TlistUpdate<CR>
+if filereadable('/usr/bin/ctags')
+    let Tlist_Ctags_Cmd = '/usr/bin/ctags'
+    let Tlist_Process_File_Always = 1
+    let Tlist_File_Fold_Auto_Close = 1
+    let Tlist_Auto_Update = 1
+    set title titlestring=%<%f\ \ \ \ \ \ \ \ \ %([\ %{Tlist_Get_Tag_Prototype_By_Line()}\ ]%)
+    nmap <F11> :TlistToggle<CR>
+    nmap <F10> :TlistUpdate<CR>
+endif
 
 nmap <F9> :NERDTreeToggle<CR>
 
@@ -109,6 +123,7 @@ set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
 set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
 set statusline+=%{&fileformat}]              " file format
 set statusline+=%=                           " right align
+set statusline+=%{fugitive#statusline()}
 set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
 set statusline+=%b,0x%-8B\                   " current char
 set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
@@ -125,6 +140,7 @@ set hidden
 set nostartofline
 set fo=qwantc1
 set mousemodel=popup_setpos
+set nomousehide
 set mouse=a
 set smarttab
 set noignorecase
@@ -157,8 +173,8 @@ set nowrap
 set linebreak
 set browsedir=current 
 set foldlevelstart=999
-set foldmethod=syntax
-set foldnestmax=1
+"set foldmethod=syntax
+set foldnestmax=2
 set cmdheight=2
 set wildmenu
 set wildignore=*.bak,*.pyc,*.pyo,*.o,*.e,*~,*.png,*.jpg
@@ -248,11 +264,11 @@ nmap <silent> ,b :CommandTBuffer<CR>
 let g:indent_guides_enable_on_vim_startup = 0
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 2
+let g:indent_guides_indent_levels = 5
 
 "===============================================================================
 " Custom Functions Start Here"{{{
 "-------------------------------------------------------------------------------
-
 " GrepCurrentBuffer: Grep the current buffer for the word under the cursor
 command! -nargs=1 GrepCurrentBuffer call GrepCurrentBuffer('<args>')
 fun! GrepCurrentBuffer(q)
