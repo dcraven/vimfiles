@@ -1,6 +1,6 @@
 "===============================================================================
 "==========  CUSTOMIZATION (vimrc)  ============================================
-" Last Modified: August 24, 2011
+" Last Modified: January 06, 2012
 "===============================================================================
 filetype off
 call pathogen#runtime_append_all_bundles() 
@@ -24,16 +24,18 @@ endif
 if version >= 703
     set undofile
     let undos = expand('~/.local/share/vim/undo')
-    if isdirectory(undos)
-        let &undodir=undos
+    if isdirectory(undos) == 0
+        call mkdir(undos, "p")
     endif
+    let &undodir=undos
 endif
 
 set backup
 let backups = expand('~/.local/share/vim/backup')
-if isdirectory(backups)
-    let &backupdir=backups
+if isdirectory(backups) == 0
+    call mkdir(backups, "p")
 endif
+let &backupdir=backups
 
 " VCSCommand Stuff
 let g:VCSCommandDeleteOnHide = 1
